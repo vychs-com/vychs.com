@@ -1,76 +1,63 @@
+import { faGithub, faTelegram } from '@fortawesome/free-brands-svg-icons'
+import { Container } from '@suid/material'
+import Fa from 'solid-fa'
 import type { Component } from 'solid-js'
-import { Typography } from '@suid/material'
 import logo from '../assets/logo.svg'
 
-import styles from '../styles/App.module.css'
-import { createSignal, onCleanup, onMount, Show } from 'solid-js'
-
-const REDIRECT_TIMEOUT = 3_000
-const WARNING_MESSAGE_TIMEOUT = 5_000
-
-const MainPage: Component = () => {
-    const [redirectTimeout, setRedirectTimeout] = createSignal<number>(
-        REDIRECT_TIMEOUT / 1_000
-    )
-    const [showWarningMessage, setShowWarningMessage] =
-        createSignal<boolean>(false)
-
-    onMount(() => {
-        const intervalId = setInterval(() => {
-            setRedirectTimeout(prevTimeout => {
-                const newTimeout = prevTimeout - 1
-
-                if (newTimeout <= 0) {
-                    clearInterval(intervalId)
-                    window.location.href = 'https://vychs.t.me/'
-                }
-
-                return newTimeout
-            })
-        }, 1_000)
-
-        const timeoutId = setTimeout(() => {
-            setShowWarningMessage(true)
-        }, WARNING_MESSAGE_TIMEOUT)
-
-        onCleanup(() => {
-            clearInterval(intervalId)
-            clearTimeout(timeoutId)
-        })
-    })
+export const MainPage: Component = () => {
+    const openProjectPage = (subdomain: string) => {
+        window.open('https://' + subdomain + '.vychs.com', '_self')
+    }
 
     return (
-        <div class={styles.App}>
-            <header class={styles.header}>
-                <img src={logo} class={styles.logo} alt="logo" />
-                <Show
-                    when={!showWarningMessage()}
-                    fallback={
-                        <Typography variant="h3" gutterBottom component="div">
-                            If you haven't been redirected yet,{' '}
-                            <a
-                                class={styles.link}
-                                href="https://vychs.t.me/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                click here
-                            </a>
-                        </Typography>
-                    }
+        <Container maxWidth="sm">
+            <div class="header">
+                <div class="logotype">
+                    <img src={logo} alt="logo" />
+                </div>
+                <div class="navigation">
+                    <a href="#" class="selected">
+                        vychs.com
+                    </a>
+                    {/*<a href='#' class="selected">Projects</a>*/}
+                    {/*<a href='#' class="disabled">About</a>*/}
+                    {/*<a href='#' class="disabled">API</a>*/}
+                </div>
+                <div class="icons">
+                    <a href="https://t.me/vychs" target="_blank">
+                        <Fa icon={faTelegram} />
+                    </a>
+                    <a
+                        href="https://github.com/s0ftik3"
+                        target="_blank"
+                        style={{ 'margin-left': '10px' }}
+                    >
+                        <Fa icon={faGithub} />
+                    </a>
+                </div>
+            </div>
+            <div class="content">
+                <div class="card" onClick={() => openProjectPage('animals')}>
+                    <div class="card__title">Random Animals</div>
+                    <div class="card__description">
+                        Create a dynamic random animal pictures using Telegram
+                        icons from various platforms. Explore customization
+                        options to tailor the generated images to your
+                        preferences and easily download the pictures for your
+                        enjoyment.
+                    </div>
+                </div>
+
+                <div
+                    class="card"
+                    onClick={() => openProjectPage('solid-chartjs')}
                 >
-                    <Typography variant="h3" gutterBottom component="div">
-                        You will be redirected in{' '}
-                        <code>{redirectTimeout()}</code>
-                    </Typography>
-                </Show>
-                <Typography variant="caption" sx={{ display: 'block' }}>
-                    This is the initial version of the website. Soon there will
-                    be something in here.
-                </Typography>
-            </header>
-        </div>
+                    <div class="card__title">SolidJs Chart.js</div>
+                    <div class="card__description">
+                        SolidJs components for Chart.js. Demo webpage.
+                    </div>
+                </div>
+            </div>
+        </Container>
     )
 }
-
-export default MainPage
