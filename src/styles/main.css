@@ -1,3 +1,4 @@
+html,
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
@@ -8,9 +9,22 @@ body {
     background-color: #010506;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-        monospace;
+button {
+    padding: 8px 24px;
+    border-radius: 8px;
+    border: 1px solid #0d2e36;
+    background-color: #0d2e3663;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.9);
 }
 
 .container {
@@ -25,7 +39,8 @@ code {
     padding: 20px 0;
     margin: 10px 0 30px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 90px;
 }
 
 .logotype {
@@ -83,11 +98,6 @@ code {
     transition: 0.3s ease;
 }
 
-.card:hover {
-    transform: scale(1.05);
-    cursor: pointer;
-}
-
 .card__title {
     color: #ffffff;
     font-size: 32px;
@@ -99,4 +109,69 @@ code {
     color: #7b8183;
     font-size: 18px;
     font-weight: lighter;
+}
+
+.card__footer {
+    display: grid;
+    grid-template-columns: 1fr 0.3fr 0.5fr;
+    grid-template-rows: auto;
+    grid-gap: 10px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.card__footer a {
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.card__footer a:hover {
+    filter: brightness(70%);
+}
+
+.open-project-btn {
+    grid-column-start: 3;
+    grid-column-end: 3;
+}
+
+.open-tg-bot-btn {
+    padding: 8px 15px;
+    grid-column-start: 2;
+    grid-column-end: 2;
+}
+
+@media only screen and (max-width: 700px) {
+    .header {
+        gap: 30px;
+    }
+
+    .card__footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto auto;
+        grid-gap: 10px;
+        margin-top: 20px;
+        align-items: center;
+    }
+
+    .card__footer a {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-column-end: 5;
+    }
+
+    .open-project-btn {
+        grid-row-start: 2;
+        grid-column-start: 3;
+        grid-column-end: 5;
+    }
+
+    .open-tg-bot-btn {
+        padding: 8px 15px;
+        grid-row-start: 2;
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
 }
