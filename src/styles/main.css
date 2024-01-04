@@ -150,6 +150,12 @@ button:active {
     grid-column-end: 2;
 }
 
+.loader {
+    display: flex;
+    justify-content: center;
+    color: #ffffff;
+}
+
 @media only screen and (max-width: 700px) {
     .header {
         gap: 30px;

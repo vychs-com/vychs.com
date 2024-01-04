@@ -15,6 +15,7 @@ import { DefaultChart } from 'solid-chartjs'
 import { createSignal, onMount, ParentProps } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { getProjectUsageStats } from '../../services/projects.service'
+import { Loader } from './Loader'
 
 interface UsageStatsChartProps extends ParentProps {
     slug: string | undefined
@@ -27,6 +28,7 @@ export const UsageStatsChart = ({ slug }: UsageStatsChartProps) => {
         width: 'auto',
         height: 'auto',
     })
+    const [loading, setLoading] = createSignal(true)
     const [error, setError] = createSignal<string | null>(null)
 
     const fallback = () => {
@@ -68,35 +70,45 @@ export const UsageStatsChart = ({ slug }: UsageStatsChartProps) => {
                     err.message ? ` Error message: "${err.message}".` : ''
                 } Please try again.`
             )
+        } finally {
+            setLoading(false)
         }
     })
 
     return (
-        <DefaultChart
-            ref={setRefLine}
-            //@ts-ignore
-            width={chartConfig.width}
-            //@ts-ignore
-            height={chartConfig.height}
-            fallback={fallback()}
-            type="line"
-            data={chartData()}
-            options={{
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    colors: {
-                        forceOverride: true,
-                    },
-                },
-                scales: {
-                    y: {
-                        ticks: {
-                            stepSize: 1,
+        <>
+            {loading() ? (
+                <Loader />
+            ) : error() ? (
+                <div class="error-message">Error: {error()}</div>
+            ) : (
+                <DefaultChart
+                    ref={setRefLine}
+                    //@ts-ignore
+                    width={chartConfig.width}
+                    //@ts-ignore
+                    height={chartConfig.height}
+                    fallback={fallback()}
+                    type="line"
+                    data={chartData()}
+                    options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            colors: {
+                                forceOverride: true,
+                            },
                         },
-                    },
-                },
-            }}
-        />
+                        scales: {
+                            y: {
+                                ticks: {
+                                    stepSize: 1,
+                                },
+                            },
+                        },
+                    }}
+                />
+            )}
+        </>
     )
 }
