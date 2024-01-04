@@ -3,12 +3,13 @@ import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import Fa from 'solid-fa'
 import { ParentProps, Show } from 'solid-js'
 import { Project } from '../../types/Project'
+import { UsageStatsChart } from './UsageStatsChart'
 
-interface CardProps extends ParentProps {
+interface ProjectCardProps extends ParentProps {
     project: Project
 }
 
-export const Card = ({ project }: CardProps) => {
+export const ProjectCard = ({ project }: ProjectCardProps) => {
     const openPage = (url: string | undefined) => {
         if (!url) return
         window.open(url, '_self')
@@ -16,6 +17,11 @@ export const Card = ({ project }: CardProps) => {
 
     return (
         <div class="card">
+            <Show when={project.has_usage_stats && project.slug}>
+                <div class="card__project-usage-stats">
+                    <UsageStatsChart slug={project.slug} />
+                </div>
+            </Show>
             <div class="card__title">{project.title}</div>
             <Show when={project.description}>
                 <div class="card__description">{project.description}</div>

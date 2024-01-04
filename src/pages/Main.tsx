@@ -3,7 +3,7 @@ import { Container, Skeleton } from '@suid/material'
 import Fa from 'solid-fa'
 import { Component, For, createSignal, onCleanup, onMount } from 'solid-js'
 import logo from '../assets/logo.svg'
-import { Card } from '../components/UI/Card'
+import { ProjectCard } from '../components/UI/ProjectCard'
 import { getProjectsList } from '../services/projects.service'
 import { Project } from '../types/Project'
 
@@ -71,7 +71,7 @@ export const MainPage: Component = () => {
                                 sx={{
                                     borderRadius: '8px',
                                     backgroundColor: '#0d2e365c',
-                                    margin: '10px',
+                                    margin: '0 0 20px 0',
                                 }}
                                 class="card__skeleton"
                                 variant="rectangular"
@@ -84,7 +84,9 @@ export const MainPage: Component = () => {
                     <div class="error-message">Error: {error()}</div>
                 ) : (
                     <For each={projects()}>
-                        {(project: Project) => <Card project={project} />}
+                        {(project: Project) => (
+                            <ProjectCard project={project} />
+                        )}
                     </For>
                 )}
             </div>
