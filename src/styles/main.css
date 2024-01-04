@@ -89,6 +89,10 @@ button:active {
     max-height: 200vh;
 }
 
+.error-message {
+    color: white;
+}
+
 .card {
     padding: 30px;
     margin: 10px;
