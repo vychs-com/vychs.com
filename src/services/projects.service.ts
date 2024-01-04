@@ -1,9 +1,9 @@
-import api, { wrapGetResponse } from '../helpers/api'
+import api, { wrapResponse } from '../helpers/api'
 
 export const getProjectsList = async () => {
-    return wrapGetResponse(await api.get('/projects'))
+    return wrapResponse(await api.get('/projects'))
 }
 
 export const getProjectUsageStats = async (slug: string | undefined) => {
-    return wrapGetResponse(await api.get(`/${slug}/stats`))
+    return wrapResponse(await api.get('/statistics/usage/' + slug))
 }
