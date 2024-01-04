@@ -1,13 +1,18 @@
 import {
+    CategoryScale,
     Chart,
     ChartData,
     ChartDataset,
     Colors,
+    LinearScale,
+    LineController,
+    LineElement,
+    PointElement,
     Title,
     Tooltip,
 } from 'chart.js'
 import { DefaultChart } from 'solid-chartjs'
-import { ParentProps, createSignal, onMount } from 'solid-js'
+import { createSignal, onMount, ParentProps } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { getProjectUsageStats } from '../../services/projects.service'
 
@@ -31,7 +36,16 @@ export const UsageStatsChart = ({ slug }: UsageStatsChartProps) => {
     }
 
     onMount(async () => {
-        Chart.register(Title, Tooltip, Colors)
+        Chart.register(
+            Title,
+            Tooltip,
+            LineController,
+            LineElement,
+            PointElement,
+            LinearScale,
+            CategoryScale,
+            Colors
+        )
 
         try {
             const response = await getProjectUsageStats(slug)
