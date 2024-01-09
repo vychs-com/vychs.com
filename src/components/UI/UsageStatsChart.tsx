@@ -57,6 +57,7 @@ export const UsageStatsChart = ({ slug }: UsageStatsChartProps) => {
                 {
                     label: 'Usage',
                     data: response?.result.map((e: any) => e.count),
+                    tension: 0.4,
                 },
             ]
 
